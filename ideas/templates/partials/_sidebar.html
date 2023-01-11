@@ -1,0 +1,64 @@
+{% load static %}
+
+<ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
+    <a
+      class="sidebar-brand  d-flex align-items-center justify-content-left"
+      href="{% url 'index' %}"
+    >
+      Verse Start
+    </a>
+
+
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'index' %}">
+          <i class="fas fa-fw fa-home"></i>
+          <span>Home</span></a
+        >
+      </li>
+
+    <li class="nav-item active">
+      <a class="nav-link" href="{% url 'dashboard' %}">
+        <i class="fas fa-chart-pie"></i>
+        <span>Dashboard</span></a
+      >
+    </li>
+
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'ideas' %}">
+          <i class="fas fa-lightbulb"></i>
+          <span>Ideas</span></a
+        >
+    </li>
+
+
+
+    <hr class="sidebar-divider" />
+
+
+    <li class="nav-item active">
+      <a
+        class="nav-link collapsed"
+        href="#"
+        data-toggle="collapse"
+        data-target="#collapseTwo"
+        aria-expanded="true"
+        aria-controls="collapseTwo"
+      >
+        <i class="fas fa-fw fa-pager"></i>
+        <span>Settings</span>
+      </a>
+      <div
+        id="collapseTwo"
+        class="collapse"
+        aria-labelledby="headingTwo"
+        data-parent="#accordionSidebar"
+      >
+        <div class="bg-white py-2 collapse-inner rounded">
+          <h6 class="collapse-header">Page Settings</h6>
+          <a class="collapse-item" href="#">Ideas</a>
+          <a class="collapse-item" href="#">Categories</a>
+        </div>
+      </div>
+    </li>
+
+  </ul>

@@ -1,0 +1,400 @@
+{% extends 'ideas/base.html' %} 
+
+{% load static %}
+{% load filters %} 
+{% block css_files %} {%endblock %} 
+
+{% block page_title %} Ideas {% endblock %} 
+
+{% block content %}
+
+<div id="wrapper">
+  {% include 'partials/_sidebar.html' %}
+
+  <div id="content-wrapper" class="d-flex flex-column">
+    <div id="content">
+     {% include 'partials/_topbar.html' %}
+
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xl-12 col-lg-12">
+            <div class="cover-pic">
+              <div
+                class="
+                  position-absolute
+                  bg-white
+                  shadow-sm
+                  rounded
+                  text-center
+                  p-2
+                  m-4
+                  love-box
+                "
+              >
+                
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-lg-3">
+            <div class="bg-white p-3 widget shadow rounded mb-4">
+              {% if idea.idea_image%}
+                  <img src="{{idea.idea_image.url }}" class="card-img-top" alt="..." />
+              {% else %}
+                  <img src="{% static 'img/no_image.jpg'%}" class="card-img-top" alt="..." />
+              {% endif %}
+              <h1 class="h6 mb-0 mt-3 font-weight-bold text-gray-900">
+                Project Title
+              </h1>
+              <p>{{idea.title}}</p>
+              <h1 class="h6 mb-0 mt-3 font-weight-bold text-gray-900">
+                Create Date
+              </h1>
+              <p>{{idea.created_at|date:"d/M/Y"}}</p>
+            </div>
+          </div>
+          <div class="col-xl-9 col-lg-9">
+            <div class="bg-white info-header shadow rounded mb-4">
+              <div
+                class="
+                  row
+                  d-flex
+                  align-items-center
+                  justify-content-between
+                  p-3
+                  border-bottom
+                "
+              >
+                <div class="col-lg-7 m-b-4">
+                  <h6 class="text-gray-900 mb-0 font-weight-bold">
+                    <i class="fas fa-star text-warning"></i>
+                    {% if idea.comments.all|display_average > 0 %}
+                      %{{idea.comments.all|display_average}}
+                      {% else %}
+                      {% endif %}
+                  </h6>
+                  <small class="text-muted">Total Comments: {{idea.comments.all.count}}</small>
+                  <h3 class="text-gray-900 mb-0 mt-0 font-weight-bold">
+                    {{idea.title}}
+                  </h3>
+                  <p class="mb-0 text-gray-800">
+                    <small class="text-muted"
+                      ><i class="fas fa-clipboard-list"></i> {{idea.category}}</small
+                    >
+                  </p>
+                </div>
+                <div class="col-lg-5 text-right">
+                  <a
+                    href="#"
+                    class="d-sm-inline-block btn btn-primary shadow-sm"
+                    ><i class="fas fa-share-alt"></i
+                  ></a>
+                  <a
+                    href="#"
+                    class="d-sm-inline-block btn btn-danger shadow-sm"
+                  >
+                    ABC <i class="fas fa-plus fa-sm ml-1"></i
+                  ></a>
+                </div>
+              </div>
+              <div
+                class="
+                  row
+                  d-flex
+                  align-items-center
+                  justify-content-between
+                  py-3
+                  px-4
+                "
+              >
+                <div class="col-lg-6 m-b-4">
+                  <p class="mb-0 text-gray-900">
+                    <i class="fas fa-bullseye"></i> <strong>Target -</strong>
+                    <span class="text-white rounded px-2 py-1 bg-info"
+                      >${{idea.target_amount}}</span
+                    >
+                    &nbsp; &nbsp; &nbsp; &nbsp;
+                    <i class="fas fa-fill-drip"></i> <strong>Funding -</strong>
+                    {% if idea.target_amount <= idea.fund_amount%}
+                      <span class="text-white rounded px-2 py-1 bg-success"
+                    {% else %}
+                      <span class="text-white rounded px-2 py-1 bg-danger"
+                    {% endif %}
+                        >${{idea.fund_amount}}</span
+                      >
+                  </p>
+
+                </div>
+
+              </div>
+            </div>
+            <div class="bg-white p-3 widget shadow rounded mb-4">
+              <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                  <a
+                    class="nav-link active"
+                    id="home-tab"
+                    data-toggle="tab"
+                    href="#home"
+                    role="tab"
+                    aria-controls="home"
+                    aria-selected="true"
+                    >Description</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    id="profile-tab"
+                    data-toggle="tab"
+                    href="#profile"
+                    role="tab"
+                    aria-controls="profile"
+                    aria-selected="false"
+                    >Team
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    id="documents-tab"
+                    data-toggle="tab"
+                    href="#documents"
+                    role="tab"
+                    aria-controls="documents"
+                    aria-selected="false"
+                    >Documents
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    id="contact-tab"
+                    data-toggle="tab"
+                    href="#contact"
+                    role="tab"
+                    aria-controls="contact"
+                    aria-selected="false"
+                    >Reviews</a
+                  >
+                </li>
+              </ul>
+              <div class="tab-content" id="myTabContent">
+                <div
+                  class="tab-pane fade active show"
+                  id="home"
+                  role="tabpanel"
+                  aria-labelledby="home-tab"
+                >
+                  {{idea.description|safe}}
+                </div>
+                <div
+                  class="tab-pane fade"
+                  id="profile"
+                  role="tabpanel"
+                  aria-labelledby="profile-tab"
+                >
+              
+                <div class="row">
+                  <div class="col">
+                    <div class="row">
+                      {% for person in persons %}
+                        <div class="col-xl-4 col-md-6 mb-4">
+                          <a class="d-flex align-items-center" href="#">
+                            <div class="dropdown-list-image mr-3">
+                              {% if person.image_url %}
+                              <img
+                                class="rounded-circle"
+                                src="{{person.image_url.url}}"
+                                alt=""
+                                width="100" height="100"
+                              />
+                              {% else %}
+                              <img
+                                class="rounded-circle"
+                                src="{% static 'img/no_avatar.jpg' %}"
+                                alt=""
+                                width="100" height="100"
+                              />
+                              {% endif %}
+                              <div class="status-indicator bg-success"></div>
+                            </div>
+                            <div class="font-weight-bold">
+                              <div class="text-truncate">{{person.first_name}} {{person.last_name}}</div>
+                              <div class="small text-gray-500">{{person.duty}}</div>
+                            </div>
+                          </a>
+                        </div>
+                      {% endfor %}
+                    </div>
+        
+                    </div>
+                  </div>
+                </div>
+
+                
+                <div
+                  class="tab-pane fade"
+                  id="documents"
+                  role="tabpanel"
+                  aria-labelledby="documents-tab"
+                >
+                  <div class="row">
+                    {% for document in documents %}
+                    <div class="col-xl-6 col-lg-6">
+                      <div class="mb-4">
+                        <li><a href="{{document.document_url.url}}"> 
+                          {{document.title}} </a></li>
+                      </div>
+                    </div>
+                    {% endfor %}
+                  </div>
+                </div>
+                <div
+                  class="tab-pane fade"
+                  id="contact"
+                  role="tabpanel"
+                  aria-labelledby="contact-tab"
+                >
+                  <div class="card-body p-0 reviews-card">
+                    
+                    {% for comment in comments %}
+                    <div class="media mb-2">
+                      <div class="media-body">
+                        <div class="mt-0 mb-1">
+                          <span class="h6 mr-2 font-weight-bold text-gray-900"
+                            >{{comment.full_name}}</span
+                          >
+                          <span
+                            ><i class="fa fa-calendar"></i> {{comment.created_at|date:"d/M/Y"}}</span
+                          >
+                          <div class="stars-rating float-right">
+                            {{comment.point|display_point|safe}}
+
+                            <span class="rounded bg-warning text-dark pl-1 pr-1"
+                              >5/{{comment.point}}</span
+                            >
+                          </div>
+                        </div>
+                        <p>
+                          {{comment.text}}
+                        </p>
+                      </div>
+                    </div>
+                    {% endfor %}
+
+                  </div>
+                  <div class="p-4 bg-light rounded mt-4">
+                    <h5 class="card-title mb-4">Comment</h5>
+                    <form name="sentMessage">
+                      <div class="row">
+                        <div class="control-group form-group col-lg-4 col-md-4">
+                          <div class="controls">
+                            <label
+                              >Your Name
+                              <span class="text-danger">*</span></label
+                            >
+                            <input
+                              type="text"
+                              class="form-control"
+                              required=""
+                            />
+                          </div>
+                        </div>
+                        <div class="control-group form-group col-lg-4 col-md-4">
+                          <div class="controls">
+                            <label
+                              >Your Email
+                              <span class="text-danger">*</span></label
+                            >
+                            <input
+                              type="email"
+                              class="form-control"
+                              required=""
+                            />
+                          </div>
+                        </div>
+                        <div class="control-group form-group col-lg-4 col-md-4">
+                          <div class="controls">
+                            <label
+                              >Point <span class="text-danger">*</span></label
+                            >
+                            <select class="form-control custom-select">
+                              <option>1 Star</option>
+                              <option>2 Star</option>
+                              <option>3 Star</option>
+                              <option>4 Star</option>
+                              <option>5 Star</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="control-group form-group">
+                        <div class="controls">
+                          <label
+                            >Comment <span class="text-danger">*</span></label
+                          >
+                          <textarea
+                            rows="3"
+                            cols="100"
+                            class="form-control"
+                          ></textarea>
+                        </div>
+                      </div>
+                      <div class="text-right">
+                        <button type="submit" class="btn btn-primary">
+                          Send Comment
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+   {% include 'partials/_footer.html' %}
+  </div>
+</div>
+
+<a class="scroll-to-top rounded" href="#page-top">
+  <i class="fas fa-angle-up"></i>
+</a>
+
+<div
+  class="modal fade"
+  id="logoutModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+        <button
+          class="close"
+          type="button"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Select "Logout" below if you are ready to end your current session.
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">
+          Cancel
+        </button>
+        <a class="btn btn-primary" href="login.html">Logout</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
